@@ -199,7 +199,7 @@ sub Code {
 
 	my $Line_Numbers = Format::Build_Line_Numbers($Code_Lines);
 
-	my $Get_Link = '<a href="' . $BaseURL . '?' . $ID . '&download">' . Language::Get(6) . '</a>';
+	my $Get_Link = '<a href="' . $BaseURL . '?' . $ID . '&amp;download">' . Language::Get(6) . '</a>';
 	my $New_Link = '<a href="' . $BaseURL . '">' . Language::Get(6) . '</a>';
 
 	Header();
