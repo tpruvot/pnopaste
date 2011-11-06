@@ -1,0 +1,32 @@
+<form action="#SCRIPTNAME#" method="post">
+	<div id="add_paste">
+		<input type="hidden" name="insert" value="1" />
+		<p class="settings">
+			<label for="name">#LANG9#</label>
+			<input type="text" name="name" id="name" />
+		</p>
+		<p class="settings">
+			<label for="expires">#LANG10#</label>
+			<select name="expires" id="expires">
+#TIMELISTOPTIONS#
+			</select>
+		</p>
+		<p class="settings">
+			<label for="language">#LANG11#</label>
+			<select name="language" id="language">
+#LANGUAGEOPTIONS#
+			</select>
+		</p>
+		<p class="description">
+			<label for="description">#LANG12#</label>
+			<textarea name="description" id="description" rows="3" cols="130"></textarea>
+		</p>
+		<p class="code">
+			<label for="code">#LANG13#</label>
+			<textarea name="code" id="code" rows="20" cols="130"></textarea>
+		</p>
+		<p class="submit">
+			<input type="submit" value="#LANG14#" />
+		</p>
+	</div>
+</form>

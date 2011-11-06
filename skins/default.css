@@ -1,0 +1,132 @@
+@import url(highlight/engine.css);
+
+/*** Common ***/
+
+#heading, #footer {
+	text-align: center;
+}
+
+#heading {
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-bottom: 1em;
+}
+
+#footer {
+	margin-top: 2em;
+}
+
+#footer p#rendertime,
+#footer p#copyright {
+	margin: 0;
+	padding: 0;
+}
+
+#footer p#rendertime {
+	font-style: italic;
+}
+
+/* Border stuff */
+#display_paste #options,
+#display_paste #time,
+#display_paste #expires,
+#display_paste #from,
+#display_paste #language,
+#display_paste #description,
+#add_paste .settings,
+#add_paste .description,
+#add_paste .code,
+#add_paste .submit {
+	border: 1px solid black;
+	border-bottom: none;
+	margin: 0;
+	padding: 0.3em 0.5em;
+}
+#display_paste #expires {
+	border-top: none;
+}
+#display_paste #description,
+#add_paste .submit {
+	border-bottom: 1px solid black;
+}
+
+/*** Add a paste page ***/
+
+label {
+	display: block;
+}
+
+textarea {
+	width: 100%;
+}
+
+textarea#description {
+	height: 3.5em;
+}
+
+textarea#code {
+	height: 20.5em;
+}
+
+.submit input {
+	width: 100%;
+}
+
+/*** Confirmation page ***/
+#confirmation {
+	border: 1px solid black;
+}
+
+#confirmation p {
+	margin: 1em;
+}
+
+/*** Display a paste page ***/
+
+/* The description itself should go to a new line */
+#display_paste .description {
+	display: block;
+}
+
+#display_paste #code {
+	margin-bottom: 0;
+}
+
+#display_paste table#codetable {
+	border-collapse: collapse;
+}
+#display_paste table#codetable td {
+	border: 1px solid black;
+}
+
+#display_paste td#linenumbers pre,
+#display_paste td#codetext pre {
+	margin: 0;
+	padding: 0;
+}
+
+#display_paste td#linenumbers {
+	text-align: right;
+	padding: 0 0.5em 0 0.1em;
+}
+
+#display_paste td#codetext {
+	background: white;
+	/* Don't ask me why this works */
+	width: 999999em;
+}
+
+/* Crap */
+
+body, p#code, p#copyright, p#rendertime { background-color: #c0c0c0; }
+td#linenumbers, p, div#confirmation { background-color: #c0c0c0; }
+/*
+
+a:link,
+a:visited,
+a:active
+{
+color: #000000;
+text-decoration: underline;
+}
+*/

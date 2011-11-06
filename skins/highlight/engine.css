@@ -1,0 +1,65 @@
+.hl_Alert {
+	color: #00f;
+}
+.hl_BaseN {
+	color: #007f00;
+}
+.hl_BString {
+	color: #c9a7ff;
+}
+.hl_Char  {
+	color: #f0f;
+}
+.hl_Comment {
+	color: #7f7f7f;
+	font-style: italic;
+}
+.hl_DataType {
+	color: #00f;
+}
+.hl_DecVal {
+	color: #00007f;
+}
+.hl_Error {
+	color: #f00;
+	font-weight: bold;
+	font-style: italic;
+}
+.hl_Float {
+	color: #00007f;
+}
+.hl_Function {
+	color: #007f00;
+}
+.hl_IString {
+	color: #f00;
+}
+.hl_Keyword {
+	font-weight: bold;
+}
+.hl_Operator {
+	color: #ffa500;
+}
+.hl_Others {
+	color: #b03060;
+}
+.hl_RegionMarker {
+	color: #96b9ff;
+	font-style: italic;
+}
+.hl_Reserved {
+	color: #9b30ff;
+	font-weight: bold;
+}
+.hl_String {
+	color: #f00;
+}
+.hl_Variable {
+	color: #00f;
+	font-weight: bold;
+}
+.hl_Warning {
+	color: #00f;
+	font-weight: bold;
+	font-style: italic;
+}
