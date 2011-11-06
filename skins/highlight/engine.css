@@ -23,7 +23,6 @@
 .hl_Error {
 	color: #f00;
 	font-weight: bold;
-	font-style: italic;
 }
 .hl_Float {
 	color: #00007f;
@@ -52,14 +51,17 @@
 	font-weight: bold;
 }
 .hl_String {
-	color: #f00;
+	color: #008000;
 }
 .hl_Variable {
 	color: #00f;
 	font-weight: bold;
 }
 .hl_Warning {
-	color: #00f;
+	color: #DD4814;
 	font-weight: bold;
-	font-style: italic;
+}
+
+pre {
+  font-size: 85%;
 }
