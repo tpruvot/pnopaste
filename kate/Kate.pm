@@ -262,6 +262,7 @@ sub new {
 		'httpd.conf' => ['Apache Configuration', ],
 		'httpd2.conf' => ['Apache Configuration', ],
 		'xorg.conf' => ['x.org Configuration', ],
+		'yaffs_export.txt' => ['Android Logcat', ],
 	};
 	$self->{'sections'} = {
 		'Assembler' => [
@@ -324,6 +325,7 @@ sub new {
 		'Other' => [
 			'ABC',
 			'Alerts',
+			'Android Logcat',
 			'CMake',
 			'CSS/PHP',
 			'CUE Sheet',
@@ -432,6 +434,7 @@ sub new {
 		'AVR Assembler' => 'AVR_Assembler',
 		'AWK' => 'AWK',
 		'Ada' => 'Ada',
+		'Android Logcat' => 'Logcat',
 		'Alerts' => 'Alerts',
 		'Ansys' => 'Ansys',
 		'Apache Configuration' => 'Apache_Configuration',

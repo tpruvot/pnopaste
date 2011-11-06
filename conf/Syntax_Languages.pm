@@ -5,7 +5,7 @@ use strict;
 
 
 # Standard selected language.
-our $Selected = 'Plain';
+our $Selected = 'Android Logcat';
 
 
 ### Hash of all available languages.
