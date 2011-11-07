@@ -12,7 +12,7 @@
 package Syntax::Highlight::Engine::Kate::Logcat;
 
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
@@ -194,7 +194,7 @@ sub parseNormal {
    # column => undef
    # context => 'Debug'
    # type => 'Detect2Chars'
-   if ($self->testDetect2Chars($text, 'D', '/', 0, 0, 0, undef, 0, 'Debug', 'Debug line')) {
+   if ($self->testStringDetect($text, 'D/', 0, 0, 0, undef, 0, 'Debug', 'Debug line')) {
       return 1
    }
    # String => 'V/'
@@ -226,7 +226,7 @@ sub parseNormal {
    # column => undef
    # context => 'Error'
    # type => 'RegExpr'
-   if ($self->testDetect2Chars($text, 'E','/', 0, 0, 0, undef, 1, 'Error', 'Error line')) {
+   if ($self->testDetect2Chars($text, 'E','/', 0, 0, 0, undef, 0, 'Error', 'Error line')) {
       return 1
    }
 

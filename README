@@ -1,0 +1,17 @@
+Installation :
+
+Please check conf/ folder and setup Apache2 with the given config file
+
+Use the Client tool :
+--------------------
+
+Setup :
+
+  edit "cli/mypaste" and set your server URL
+
+  ln -s /<path>/cli/mypaste /usr/local/bin/
+
+  alias logpaste='adb logcat -d -v time | mypaste'
+
+then type "logpaste" to get directly your device logcat uploaded :)
+

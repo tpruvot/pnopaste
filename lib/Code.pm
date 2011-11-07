@@ -42,7 +42,7 @@ sub Add {
         my $Last_ID = $Database::dbh->{'mysql_insertid'};
 
         # Show us the confirm page.
-        HTML::Confirm($Last_ID, $Full_URL);
+        HTML::Confirm($Last_ID, $Full_URL, length($Code));
 }
 
 1;

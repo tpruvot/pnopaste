@@ -13,7 +13,7 @@ use strict;
 use lib::Database;
 
 # Default (fallback) settings.
-my $CSS_Default		= 'lightgreen';
+my $CSS_Default		= 'rabbid';
 my $Title_Default	= 'Nopaste';
 
 

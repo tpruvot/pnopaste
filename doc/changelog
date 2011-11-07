@@ -1,0 +1,46 @@
+
+This package was forked from Debian 1.4-4 'pnopaste' and 'pnopaste-cli' packages
+
+In official version :
+
+Version 1.4:
+- Fix typo in french translation.
+- Remove MySQL'ish "`" from Querys.
+- Change default user for running the cronjob from nobody to www-data.
+- Change my email address and adjust the copyright years.
+- Minor code cleanups.
+- Dont print warnings if the remote address or the URL base could not be
+  initialized. This happens e.g. if you execute index.pl about your shell.
+
+Version 1.3:
+- Fix warning from Perl if the code view parameter does not only
+  contain integers, triggered by int().
+- Implemented a translation system, which will translate the application
+  to the users language. The users language is automatic detected by Geo::IP.
+- Add german translation.
+- Add francaise translation from Denis Briand.
+
+Version 1.2:
+- Fix error in MySQL scheme.
+- Update copyrights.
+- Some code cleanups.
+- Use "use"-statements instead of the unsafe require.
+
+Version 1.1:
+- Skin support.
+- Switch to XHTML.
+- Fix security issue where a attacker may include input
+  to the "language" field in the nopaste table.
+- Display "Download" and "New" on a nopaste output page.
+- Some Perl warnings fixes.
+- Split out the highlighting css to highlight/.
+- Workaround a line ending bug in Syntax::HL::Kate.
+- Add cli tool bin/nopaste-it for nopasting things from the shell.
+- And also his manpage.
+- Add settings table.
+- Increase $CGI::POST_MAX by *= 8.
+- Some code cleanups.
+- Fix some typos.
+
+Version 1.0:
+- Initial release.

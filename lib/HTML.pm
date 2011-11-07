@@ -23,11 +23,11 @@ use lib::Version;
 
 # Shows the confirm page with the ID link.
 sub Confirm {
-	my($ID, $Self_URL) = @_;
+	my($ID, $Self_URL, $Code_Size) = @_;
 
 	Header();
 
-	List_Confirm($ID, $Self_URL);
+	List_Confirm($ID, $Self_URL, $Code_Size);
 
 	Footer();
 }
@@ -132,7 +132,7 @@ sub Add_Form {
 
 ### Creates the confirm page from the template.
 sub List_Confirm {
-	my($ID, $FullURL) = @_;
+	my($ID, $FullURL, $CodeSize) = @_;
 
 	# Add the '?<ID>' to the Full URL.
 	my $FullURL_ID = $FullURL . '?' . $ID;
@@ -143,6 +143,7 @@ sub List_Confirm {
 		# Replace the template url with the real one for POST.
 		$_ =~ s/#LINKCODE#/$FullURL_ID/g;
 		$_ =~ s/#URLCODE#/$FullURL/g;
+		$_ =~ s/#CODESIZE#/$CodeSize/g;
 		$_ = Language_Replace($_);
 		print;
 	}

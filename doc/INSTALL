@@ -1,0 +1,52 @@
+INSTALL
+=======
+Copy the whole project to your webserver DocumentRoot.
+
+MODULES
+=======
+You need the DBD driver for DBI - this is available in every distribution as package.
+On Debian just type: # apt-get install libdbi-perl
+But you also need a rarely packaged module for syntax highlighting.
+In most cases you have to install it about CPAN.
+	# perl -MCPAN -e shell
+	% install Syntax::Highlight::Engine::Kate
+
+or if you are on an after Debian Lenny release:
+	# apt-get install libsyntax-highlight-engine-kate-perl libwww-perl libgeo-ip-perl
+
+After that you should have everything for pnopaste!
+
+DATABASE
+========
+Create a new user and database for pnopaste at your MySQL server.
+Now import the "sql/mysql_5.sql" to the new database.
+
+CONFIGURATION
+=============
+Now go to the "conf/" directory and insert your newly created user,
+password and databasename (maybe also host) into the SQL_Access.pm.
+
+WEBSERVER
+=========
+I recommend (for example for Apache2) the following VirtualHost:
+
+<VirtualHost *:80>
+        ServerName      nopaste.yourhost.com
+        ServerAdmin     im-the@serveradmin.com
+        DocumentRoot    /var/www/pnopaste
+        <Directory "/var/www/pnopaste">
+                AllowOverride   all
+                DirectoryIndex  index.pl
+                AddHandler      cgi-script .pl
+                Options         Indexes ExecCGI
+        </Directory>
+</VirtualHost>
+
+Surely you could also use mod_perl instead of cgi.
+But you should make sure, that your webserver allows you to overwrite settings, if you don't allow it,
+evil users may read out your lib/Database.pm for example and damage you!
+That is the reason why I delivered some .htaccess files. :-)
+
+END
+===
+Now everything should be done and hopefully working fine!

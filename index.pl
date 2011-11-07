@@ -24,8 +24,7 @@ my $CGI = new CGI;
 
 # Security settings for the cgi module.
 $CGI::DISABLE_UPLOADS = 1;
-$CGI::POST_MAX = 83886080;
-
+$CGI::POST_MAX = 1024 * 1024 * 8;
 
 # Start the application.
 Main();

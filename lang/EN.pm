@@ -40,7 +40,8 @@ our %Strings = (
 	25	=> 'Nopaste from:',
 	26	=> 'Expires on:',
 	27	=> 'From:',
-	28	=> 'Syntax:'
+	28	=> 'Syntax:',
+	29	=> 'Bytes'
 );
 
 1;
