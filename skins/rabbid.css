@@ -1,0 +1,171 @@
+@import url(highlight/engine.css);
+
+/*** Common ***/
+html {
+	background: #58503B url('rabbid.jpg') no-repeat;
+}
+
+body, p, div { font-family: Verdana,arial,helvetica,sans-serif; font-size: 8pt;}
+
+#heading, #footer {
+	text-align: center;
+	font-family: Arial,helvetica,sans-serif;
+}
+
+#heading a {
+	text-decoration: none;
+	color: #000;
+	font-family: Arial,helvetica,sans-serif;
+	text-shadow: #C0C0C0 1px 1px 3px;
+	font-size: 2em;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+#heading {
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+p#code {
+	font-family: Verdana,arial,helvetica,sans-serif;
+}
+pre {
+/*  font-size: 85%; */
+}
+
+#footer {
+	margin-top: 2em;
+	font-size: 70%;
+}
+
+#footer p#rendertime,
+#footer p#copyright {
+	margin: 0;
+	padding: 0;
+}
+
+#footer p#rendertime {
+	font-style: italic;
+}
+
+/* Border stuff */
+#display_paste #options,
+#display_paste #time,
+#display_paste #expires,
+#display_paste #from,
+#display_paste #language,
+#display_paste #description,
+#add_paste .settings,
+#add_paste .description,
+#add_paste .code,
+#add_paste .submit {
+	border: 1px solid black;
+	border-bottom: none;
+	margin: 0;
+	padding: 0.3em 0.5em;
+	font-family: Verdana,arial,helvetica,sans-serif;
+}
+#display_paste #expires {
+	border-top: none;
+}
+#display_paste #description,
+#add_paste .submit {
+	border-bottom: 1px solid black;
+}
+
+/*** Add a paste page ***/
+
+label {
+	display: block;
+}
+
+textarea {
+	width: 100%;
+}
+
+textarea#description {
+	height: 3.5em;
+}
+
+textarea#code {
+	height: 20.5em;
+}
+
+.submit input {
+	width: 100%;
+}
+
+/*** Confirmation page ***/
+#confirmation {
+	border: 1px solid black;
+}
+
+#confirmation p {
+	margin: 1em;
+}
+
+/*** Display a paste page ***/
+
+/* The description itself should go to a new line */
+#display_paste .description {
+	display: block;
+}
+
+#display_paste #code {
+	margin-bottom: 0;
+}
+
+#display_paste table#codetable {
+	border-collapse: collapse;
+}
+#display_paste table#codetable td {
+	border: 1px solid black;
+}
+
+#display_paste td#linenumbers pre,
+#display_paste td#codetext pre {
+	margin: 0;
+	padding: 0;
+}
+
+#display_paste td#linenumbers {
+	text-align: right;
+	padding: 0 0.5em 0 0.1em;
+}
+
+#display_paste td#codetext {
+	background: white;
+	/* Don't ask me why this works */
+	width: 999999em;
+}
+
+/* Crap */
+
+body, p#code, p#rendertime { }
+
+p#copyright, p#rendertime { color: #ccc; }
+p#copyright a { color: #ccc; }
+
+#display_paste p { background-color: #eee; opacity:0.75; }
+#add_paste p { background-color: #eee; opacity:0.85; }
+
+p.submit { text-align: center }
+p.submit input[type=submit] { height: 30px; width: 200px; }
+
+td#linenumbers, div#confirmation { background-color: #eee; opacity:0.75; }
+
+span.description {
+	font-style: italic;
+}
+
+/*
+
+a:link,
+a:visited,
+a:active
+{
+color: #000000;
+text-decoration: underline;
+}
+*/
