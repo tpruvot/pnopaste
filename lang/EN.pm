@@ -13,19 +13,19 @@ use strict;
 
 
 our %Strings = (
-	1	=> 'Invalid expire time.',
+	1	=> 'Invalid expire period.',
 	2	=> 'Your Hostname is blacklisted.',
 	3	=> 'You used one or more badwords in the code fields.',
 	4	=> 'The given code language is not present.',
-	5	=> 'The user has not left a description.',
+	5	=> 'no description',
 	6	=> 'Here',
 	7	=> 'Rendertime:',
 	8	=> 'sec',
-	9	=> 'Your name:',
+	9	=> 'Your pseudo:',
 	10	=> 'Expires in:',
-	11	=> 'Syntax Highlighting:',
+	11	=> 'Highlighting:',
 	12	=> 'Description:',
-	13	=> 'Code:',
+	13	=> 'Data:',
 	14	=> 'Insert',
 	15	=> 'Hello. Your code has been successfull added.',
 	16	=> 'You can access your paste now on',
@@ -40,7 +40,7 @@ our %Strings = (
 	25	=> 'Nopaste from:',
 	26	=> 'Expires on:',
 	27	=> 'From:',
-	28	=> 'Code language:'
+	28	=> 'Syntax:'
 );
 
 1;

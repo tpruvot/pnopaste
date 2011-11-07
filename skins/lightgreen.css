@@ -9,6 +9,7 @@
 
 #heading a {
 	text-decoration: none;
+	color: #AA4014;
 }
 
 #heading {
@@ -131,8 +132,8 @@ textarea#code {
 
 /* Crap */
 
-body, p#code, p#copyright, p#rendertime { background-color: #aad4ff; }
-td#linenumbers, p, div#confirmation { background-color: #def; }
+body, p#code, p#copyright, p#rendertime { background-color: #aad4aa; }
+td#linenumbers, p, div#confirmation { background-color: #ded; }
 
 span.description {
 	font-style: italic;
