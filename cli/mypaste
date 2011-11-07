@@ -84,7 +84,7 @@ EOF
 }
 
 # Check the given expire time.
-if($Expires ne '1d' and $Expires ne '1w' and $Expires ne 'never'){
+if($Expires ne '1d' and $Expires ne '1w' and $Expires ne '1m' and $Expires ne 'never'){
 	die 'Invalid expiration code given.', "\n";
 	exit(1);
 }
