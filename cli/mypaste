@@ -1,0 +1,166 @@
+#!/usr/bin/perl
+
+# This file is part of the pnopaste program
+# Copyright (C) 2008-2010 Patrick Matthäi <pmatthaei@debian.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+use warnings;
+use strict;
+use Getopt::Long;
+use LWP::Simple;
+use LWP::UserAgent;
+use HTTP::Request::Common qw(POST);
+
+my $Build	= '1.4-4';
+my $NoPaste	= 'http://epsy.ath.cx:888/paste/';
+my $Lang	= 'Android Logcat';
+my $Name	= $ENV{'USER'} || undef;
+my $Expires	= '1w';
+my $Version	= undef;
+my $File	= undef;
+my $Help	= undef;
+my $List	= undef;
+my $Input	= '';
+
+
+# Get our params.
+Getopt::Long::Configure('bundling');
+GetOptions (
+	's|list'		=> \$List,
+	'h|help'		=> \$Help,
+	'u|url=s'		=> \$NoPaste,
+	'n|name=s'		=> \$Name,
+	'l|language=s'	=> \$Lang,
+	'e|expires=s'	=> \$Expires,
+	'f|file=s'		=> \$File,
+	'v|version'		=> \$Version
+);
+
+
+# Show the version.
+if($Version){
+	print <<EOF;
+Perl Nopaste Client version: $Build
+EOF
+	exit(0);
+}
+
+
+# Show the usage? :)
+if($Help){
+	print <<EOF;
+Usage of nopaste-it:
+	-h / --help:
+		Display this help and exit.
+	-v / --version:
+		Display version and exit.
+	-u / --url <url>:
+		Use a different nopaste URL than $NoPaste.
+	-n / --name:
+		Use a different author name than your UNIX username (if it is set).
+	-l / --language <language>:
+		Set the given code language. Popular ones are for example:
+			"C", "C++", "Diff", "Perl", "Ruby", etc.
+		You can get the list of supported languages by using the
+		"-s/--list" option of this program.
+		It will be plain unless nothing different is set.
+			Note: This is case sensitive.
+	-e / --expires <expire>:
+		Set the expire option.
+		At the moment it only accepts: "1d", "1w" and "never".
+		The default value is "1w".
+	-f / --file <filename>:
+		Add the content of the given file to your paste instead of reading
+		from STDIN.
+	-s / --list:
+		Gets supported code languages from remote pnopaste and prints them.
+		This option could also be mixed with "url".
+EOF
+	exit(0);
+}
+
+# Check the given expire time.
+if($Expires ne '1d' and $Expires ne '1w' and $Expires ne 'never'){
+	die 'Invalid expiration code given.', "\n";
+	exit(1);
+}
+
+
+### Gets languages and exit.
+if($List){
+	my $Site = get($NoPaste);
+
+	die 'Did not found any output.', "\n" if !$Site;
+
+	my($Select) = ($Site =~ m!<select[^>]+name="language"[^>]*>(.*?)</select>!s);
+	my $Values = '';
+
+	while($Select =~ s!<option[^>]*>(.*?)</option>!!s){
+	    $Values .= "\t" . $1 . "\n";
+	}
+
+	print 'Supported languages by remote pnopaste:', "\n", $Values;
+
+	exit(0);
+}
+
+
+# Read from STDIN or file?
+if(!$File){
+	# We just get our stuff from STDIN.
+	while(<STDIN>){
+		$Input .= $_;
+	}
+}
+else {
+	if(!-e $File){
+		# Epic fail! This file does not exist!
+		print 'Error. File ', $File, ' does not exist.', "\n";
+		exit(1);
+	}
+
+	# Open the file and try to read from it.
+	open(READ,'<',$File) or die 'Can not read input file: ', $!, "\n";
+	while(<READ>){
+		$Input .= $_;
+	}
+	close(READ);
+}
+
+
+my $Agent = LWP::UserAgent->new;
+# Our name ;)
+$Agent->agent('Perl Nopaste Agent ' . $Build);
+
+# Our HTTP request with POST params.
+my $Request = POST $NoPaste, [ 'code' => $Input, 'expires' => $Expires, 'name' => $Name, 'language' => $Lang ];
+my $Result = $Agent->request($Request);
+
+if($Result->is_success){
+	# The query itself was successful.
+	my $Content = $Result->content;
+	$Content =~ m/<a href=\"(.*)\">/;
+
+	my $ID = $1;
+
+	if($ID and $ID =~ /\d+/){
+		# $ID is an integer, so on it has to be right.
+		print 'You can find your result on: ', "\n";
+		print "\t", $ID, "\n";
+		print "\t",	$ID, '&download', "\n";
+	} else {
+		# Where the fuck is the fucking integer?
+		print 'Seems like there was an error on the server side. The full server output is:', "\n";
+		print $Result->content;
+	}
+}
+else {
+	# Epic fail at the query, just fuck up..
+	print 'Error: ', $Result->status_line, "\n";
+	exit(1);
+}
+
