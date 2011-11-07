@@ -139,6 +139,11 @@ span.description {
 	font-style: italic;
 }
 
+pre {
+  font-size: 85%;
+}
+
+
 /*
 
 a:link,
