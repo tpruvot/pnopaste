@@ -29,9 +29,7 @@ body, p, div { font-family: Verdana,arial,helvetica,sans-serif; font-size: 8pt;}
 
 p#code {
 	font-family: Verdana,arial,helvetica,sans-serif;
-}
-pre {
-/*  font-size: 85%; */
+	padding: 0.2em 0.6em;
 }
 
 #footer {
@@ -129,13 +127,22 @@ textarea#code {
 	padding: 0;
 }
 
-#display_paste td#linenumbers {
-	text-align: right;
-	padding: 0 0.5em 0 0.1em;
+#display_paste table#codetable {
+	border-spacing: 0;
 }
 
-#display_paste td#codetext {
+#display_paste table#codetable td#linenumbers pre {
+        margin-top: -1.4em;
+}
+
+#display_paste table#codetable td#linenumbers {
+	text-align: right;
+	padding: 0 0.1em 0 0.1em;
+}
+
+#display_paste table#codetable td#codetext {
 	background: white;
+
 	/* Don't ask me why this works */
 	width: 999999em;
 }
