@@ -17,7 +17,7 @@ use HTTP::Request::Common qw(POST);
 
 my $Build	= '1.4-4';
 my $NoPaste	= 'http://epsy.ath.cx:888/paste/';
-my $Lang	= 'Android Logcat';
+my $Lang	= 'Plain';
 my $Name	= $ENV{'USER'} || undef;
 my $Expires	= '1w';
 my $Version	= undef;
@@ -143,17 +143,21 @@ my $Result = $Agent->request($Request);
 if($Result->is_success){
 	# The query itself was successful.
 	my $Content = $Result->content;
-	$Content =~ m/<a href=\"(.*)\">/;
 
-	my $ID = $1;
+	# ignore header link
+	$Content =~ s!<a href=\"(.*)\?(\d+)\">!!s;
+	my $URL = $NoPaste;
+	my $ID = $2;
 
 	if($ID and $ID =~ /\d+/){
 		# $ID is an integer, so on it has to be right.
 		print 'You can find your result on: ', "\n";
-		print "\t", $ID, "\n";
-		print "\t",	$ID, '&download', "\n";
+		print "\t", $URL, "?", $ID, "\n";
+		print "\t", $URL, "?", $ID, '&download', "\n";
 	} else {
 		# Where the fuck is the fucking integer?
+		print "ID=", $ID, "\n";
+		print "REGEX 1=", $1, "\n";
 		print 'Seems like there was an error on the server side. The full server output is:', "\n";
 		print $Result->content;
 	}
