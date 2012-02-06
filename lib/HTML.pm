@@ -19,7 +19,7 @@ use lib::Skin;
 use lib::Language;
 use lib::Highlighting;
 use lib::Version;
-
+use Digest::MD5 qw(md5_hex);
 
 # Shows the confirm page with the ID link.
 sub Confirm {
@@ -166,7 +166,7 @@ sub Add {
 sub Code {
 	my($ID, $Download, $BaseURL) = @_;
 
-	my $Query = 'SELECT name,description,code,time,ip,language FROM nopaste WHERE id = ? LIMIT 1';
+	my $Query = 'SELECT name,description,code,md5,cached,time,ip,language FROM nopaste WHERE id = ? LIMIT 1';
 	$Query = $Database::dbh->prepare($Query);
 	$Query->execute($ID);
 
@@ -176,14 +176,20 @@ sub Code {
 	}
 
 	# Declarations and some failovers.
-	my $Time		= localtime($List->{'time'});
-	my $Author		= $List->{'name'}			|| 'Anonymous';
-	my $Description	= $List->{'description'}	|| Language::Get(5);
-	my $Code		= $List->{'code'}			|| '';
-	my $IP			= $List->{'ip'};
-	my $Syntax_HL	= $List->{'language'}		|| 'Plain';
-	my $Expires		= Expire::Get_Expire($ID);
+	my $Time        = localtime($List->{'time'});
+	my $Author      = $List->{'name'}   || 'Anonymous';
+	my $Description = $List->{'description'} || Language::Get(5);
+	my $Code        = $List->{'code'}   || '';
+	my $Md5         = $List->{'md5'}    || '';
+	my $Cached      = $List->{'cached'} || '';
+	my $IP          = $List->{'ip'};
+	my $Syntax_HL   = $List->{'language'} || 'Plain';
+	my $Expires     = Expire::Get_Expire($ID);
 
+	my $DiffCheck = substr $Code, 0, 4;
+	if ($Syntax_HL eq 'Plain' && $DiffCheck eq 'diff') {
+		$Syntax_HL = 'Diff';
+	}
 
 	# We have to change the content-type for downloads.
 	if($Download){
@@ -195,10 +201,27 @@ sub Code {
 
 	$Author .= ' (' . $IP . ')';
 
-	my($Code_Lines, $Code_Text) = Format::To_HTML($Code, $Syntax_HL, 1);
-	my($Desc_Lines, $Desc_Text) = Format::To_HTML($Description, $Syntax_HL, 0);
+	my $Md5Check = md5_hex($Syntax_HL.$Time.$Code);
 
-	my $Line_Numbers = Format::Build_Line_Numbers($Code_Lines);
+	my ($Code_Lines, $Code_Text, $Line_Numbers);
+
+	if ($Cached eq '' || $Md5Check ne $Md5) {
+		($Code_Lines, $Code_Text) = Format::To_HTML($Code, $Syntax_HL, 1);
+		$Line_Numbers = Format::Build_Line_Numbers($Code_Lines);
+
+		my $CacheQuery = 'UPDATE nopaste set md5=?, cached=? WHERE id = ?';
+
+		$Query = $Database::dbh->prepare($CacheQuery);
+		$Query->execute($Md5Check, $Code_Text, $ID);
+
+	} else {
+		$Code_Text = $Cached;
+		my $Dummy;
+		($Code_Lines, $Dummy) = Format::To_HTML($Code, 'Plain', 1);
+		$Line_Numbers = Format::Build_Line_Numbers($Code_Lines);
+	}
+
+	my($Desc_Lines, $Desc_Text) = Format::To_HTML($Description, 'Plain', 0);
 
 	my $Get_Link = '<a href="' . $BaseURL . '?' . $ID . '&amp;download">' . Language::Get(6) . '</a>';
 	my $New_Link = '<a href="' . $BaseURL . '">' . Language::Get(6) . '</a>';
