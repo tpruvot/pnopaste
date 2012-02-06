@@ -68,31 +68,25 @@ CREATE INDEX `fk_blacklist_word_settings1` ON `blacklist_word` (`settings_id` AS
 -- -----------------------------------------------------
 -- Table `nopaste`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `nopaste` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `id_hashed` VARCHAR(45) NULL ,
-  `settings_id` INT UNSIGNED NOT NULL ,
-  `author` VARCHAR(80) NULL ,
-  `description` VARCHAR(500) NULL ,
-  `code` MEDIUMBLOB NOT NULL ,
-  `date_added` DATETIME NOT NULL ,
-  `date_expires` DATETIME NULL ,
-  `language` VARCHAR(25) NOT NULL ,
-  `ip` VARCHAR(50) NOT NULL ,
-  PRIMARY KEY (`id`, `settings_id`) ,
-  CONSTRAINT `fk_nopaste_settings`
-    FOREIGN KEY (`settings_id` )
-    REFERENCES `settings` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE IF NOT EXISTS `nopaste` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `code` longtext NOT NULL,
+  `md5` varchar(32) NOT NULL DEFAULT '',
+  `cached` longtext,
+  `language` varchar(100) NOT NULL,
+  `time` int(15) NOT NULL DEFAULT '0',
+  `ip` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `expires` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `time` (`time`),
+  KEY `expires` (`expires`)
+)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARSET=utf8;
 
 CREATE INDEX `date_expires` ON `nopaste` (`date_expires` ASC) ;
-
-CREATE INDEX `id_hashed` ON `nopaste` (`id_hashed` ASC) ;
-
-CREATE INDEX `fk_nopaste_settings` ON `nopaste` (`settings_id` ASC) ;
 
 
 -- -----------------------------------------------------
