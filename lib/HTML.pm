@@ -187,8 +187,13 @@ sub Code {
 	my $Expires     = Expire::Get_Expire($ID);
 
 	my $DiffCheck = substr $Code, 0, 4;
-	if ($Syntax_HL eq 'Plain' && $DiffCheck eq 'diff') {
-		$Syntax_HL = 'Diff';
+	if ($Syntax_HL eq 'Plain') {
+		if ($DiffCheck eq 'diff') {
+			$Syntax_HL = 'Diff';
+		}
+		elsif ($DiffCheck eq '----') {
+			$Syntax_HL = 'Android Logcat';
+		}
 	}
 
 	# We have to change the content-type for downloads.
