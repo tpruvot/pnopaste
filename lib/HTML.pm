@@ -187,11 +187,15 @@ sub Code {
 	my $Expires     = Expire::Get_Expire($ID);
 
 	my $DiffCheck = substr $Code, 0, 4;
+	my $PerlCheck = substr $Code, 0, 15;
 	if ($Syntax_HL eq 'Plain') {
 		if ($DiffCheck eq 'diff') {
 			$Syntax_HL = 'Diff';
 		}
-		elsif ($DiffCheck eq '----') {
+		elsif ($PerlCheck eq '#!/usr/bin/perl') {
+			$Syntax_HL = 'Perl';
+		}
+		elsif ($PerlCheck eq '--------- begin') {
 			$Syntax_HL = 'Android Logcat';
 		}
 	}
