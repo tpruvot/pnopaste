@@ -7,12 +7,12 @@
 
 #kate xml version 1.02
 #kate version 2.4
-#generated: Sun Nov  6 22:02:04 2011, localtime
+#generated: Sun Mar 11 12:02:04 2012, localtime
 
-package Syntax::Highlight::Engine::Kate::Logcat;
+package Syntax::Highlight::Engine::Kate::Dmesg;
 
 use vars qw($VERSION);
-$VERSION = '0.5';
+$VERSION = '0.7';
 
 use strict;
 use warnings;
@@ -100,7 +100,7 @@ sub new {
          attribute => 'Normal Text',
       },
    });
-   $self->deliminators('\\s|\\(|\\)|:|\\/|\\[|\\]|\\{|\\||\\}');
+   $self->deliminators('\\s|:|\\[|\\]');
    $self->basecontext('Normal');
    $self->keywordscase(0);
    $self->initialize;
@@ -109,7 +109,7 @@ sub new {
 }
 
 sub language {
-   return 'Android Logcat';
+   return 'Dmesg';
 }
 
 sub parseVerbose {
@@ -136,7 +136,7 @@ sub parseDebug {
 sub parseDateTime {
    my ($self, $text) = @_;
    #
-   if ($self->testRegExpr($text, '([DVIWE]\\/)', 0, 0, 0, undef, 0, '#stay', undef)) {
+   if ($self->testRegExpr($text, '(\\[\\d+\\.\\d+\\])', 0, 0, 0, undef, 0, '#stay', undef)) {
       $self->highlightText($text);
       return 1
    }
@@ -184,43 +184,23 @@ sub parseNormal {
    #testDetect2Chars(\$text, $char1, $char2, $insensitive, $dynamic,
    #                  $lookahead, $column, $firstnonspace, $context, $attribute);
 
-   # String => 'D/'
    # attribute => 'Debug line'
    # column => undef
    # context => 'Debug'
-   if ($self->testStringDetect($text, 'D/', 0, 0, 0, undef, 0, 'Debug', 'Debug line')) {
+   # if ($self->testStringDetect($text, '<7>', 0, 0, 0, undef, 0, 'Debug', 'Debug line')) {
+   if ($self->testRegExpr($text, '<[789]>', 0, 0, 0, 0, 0, 'Debug', 'Debug line')) {
       return 1
    }
-   # String => 'V/'
-   # attribute => 'Verbose line'
-   # column => undef
-   # context => 'Verbose'
-   #if ($self->testDetect2Chars($text, 'V','/', 0, 0, 0, undef, 0, 'Verbose', 'Verbose line')) {
-   if ($self->testStringDetect($text, 'V/', 0, 0, 0, undef, 0, 'Debug', 'Verbose line')) {
+   if ($self->testStringDetect($text, '<6>', 0, 0, 0, undef, 0, 'Debug', 'Verbose line')) {
       return 1
    }
-   # String => 'I/'
-   # attribute => 'Info line'
-   # column => undef
-   # context => 'Info'
-   #if ($self->testDetect2Chars($text, 'I','/', 0, 0, 0, undef, 0, 'Info', 'Info line')) {
-   if ($self->testStringDetect($text, 'I/', 0, 0, 0, undef, 0, 'Debug', 'Info line')) {
+   if ($self->testStringDetect($text, '<5>', 0, 0, 0, undef, 0, 'Debug', 'Info line')) {
       return 1
    }
-   # String => 'W/'
-   # attribute => 'Warning line'
-   # column => undef
-   # context => 'Warning'
-   #if ($self->testDetect2Chars($text, 'W','/', 0, 0, 0, undef, 0, 'Warning', 'Warning line')) {
-   if ($self->testStringDetect($text, 'W/', 0, 0, 0, undef, 0, 'Warning', 'Warning line')) {
+   if ($self->testStringDetect($text, '<4>', 0, 0, 0, undef, 0, 'Warning', 'Warning line')) {
       return 1
    }
-   # String => 'E/'
-   # attribute => 'Error line'
-   # column => undef
-   # context => 'Error'
-   #if ($self->testDetect2Chars($text, 'E','/', 0, 0, 0, undef, 0, 'Error', 'Error line')) {
-   if ($self->testStringDetect($text, 'E/', 0, 0, 0, undef, 0, 'Error', 'Error line')) {
+   if ($self->testStringDetect($text, '<3>', 0, 0, 0, undef, 0, 'Error', 'Error line')) {
       return 1
    }
 
@@ -244,7 +224,10 @@ sub parseNormal {
    # attribute => 'Number'
    # context => '#stay'
    # type => 'RegExpr'
-   if ($self->testRegExpr($text, '\\d*\\.?\\d*e?\\d+', 0, 0, 0, undef, 0, '#stay', 'Number')) {
+   #if ($self->testRegExpr($text, '\\d*\\.?\\d*e?\\d+', 0, 0, 0, undef, 0, '#stay', 'Number')) {
+   #   return 1
+   #}
+   if ($self->testRegExpr($text, '0x[\\dabcdefABCDEF]+', 0, 0, 0, undef, 0, '#stay', 'Number')) {
       return 1
    }
    return 0;
@@ -263,17 +246,17 @@ __END__
 
 =head1 NAME
 
-Syntax::Highlight::Engine::Kate::Logcat - a Plugin for Android Logcat syntax highlighting
+Syntax::Highlight::Engine::Kate::Dmesg - a Plugin for dmesg -r highlighting (colored)
 
 =head1 SYNOPSIS
 
- require Syntax::Highlight::Engine::Kate::Logcat;
- my $sh = new Syntax::Highlight::Engine::Kate::Logcat([
+ require Syntax::Highlight::Engine::Kate::Dmesg;
+ my $sh = new Syntax::Highlight::Engine::Kate::Dmesg([
  ]);
 
 =head1 DESCRIPTION
 
-Syntax::Highlight::Engine::Kate::Logcat is a plugin module that provides syntax highlighting
+Syntax::Highlight::Engine::Kate::Dmesg is a plugin module that provides syntax highlighting
 to the Syntax::Haghlight::Engine::Kate highlighting engine.
 
 This code is generated from the syntax definition files used

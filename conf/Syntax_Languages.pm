@@ -45,6 +45,7 @@ our %Langs = (
 	'Debian Changelog'				=> 1,
 	'Debian Control'			=> 0,
 	'Diff'						=> 1,
+	'Dmesg'					=> 1,
 	'Doxygen'					=> 1,
 	'E Language'				=> 0,
 	'Eiffel'				=> 0,

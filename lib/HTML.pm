@@ -186,6 +186,11 @@ sub Code {
 	my $Syntax_HL   = $List->{'language'} || 'Plain';
 	my $Expires     = Expire::Get_Expire($ID);
 
+	# check second line of code
+	my @Headings = split(/\n/, $Code, 2);
+	my $Line = pop @Headings || '';
+	my $DmesgCheck = substr $Line, 2, 2;
+
 	my $DiffCheck = substr $Code, 0, 4;
 	my $PerlCheck = substr $Code, 0, 15;
 	if ($Syntax_HL eq 'Plain') {
@@ -197,6 +202,9 @@ sub Code {
 		}
 		elsif ($PerlCheck eq '--------- begin') {
 			$Syntax_HL = 'Android Logcat';
+		}
+		elsif ($DmesgCheck eq '>[') {
+			$Syntax_HL = 'Dmesg';
 		}
 	}
 
@@ -219,7 +227,6 @@ sub Code {
 		$Line_Numbers = Format::Build_Line_Numbers($Code_Lines);
 
 		my $CacheQuery = 'UPDATE nopaste set md5=?, cached=? WHERE id = ?';
-
 		$Query = $Database::dbh->prepare($CacheQuery);
 		$Query->execute($Md5Check, $Code_Text, $ID);
 
